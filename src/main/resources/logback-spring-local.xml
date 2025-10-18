@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <included>
 
     <!--    spring에서 기본으로 주어지는 console log appender 설정을 불러옴.-->
