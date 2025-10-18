@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!--    해당 파일의 기본 로깅 속성(필드) 값들을 불러옴-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--    logback-variables.properties 파일의 속성(필드) 값을 불러와 사용할 수 있도록 설정-->
+    <property resource="logback-variables.properties"/>
+
+    <!--    spring.profiles.active 값에 따라 환경에 맞는 logback 설정 파일을 불러옴. 해당 파일이 존재해야함.-->
+    <!--    intellij 유료버전에서는 run/debug configuration에서 spring.profiles.active 값을 설정할 수 있음.-->
+    <!--    무료버전에서는 VM options에 -Dspring.profiles.active=local 과 같이 설정 가능.-->
+    <include resource="logback-spring-${spring.profiles.active}.xml"/>
+</configuration>
