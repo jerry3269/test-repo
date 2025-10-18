@@ -1,5 +1,6 @@
 package com.example.test_repo.common.repository;
 
+import com.example.test_repo.aop.annotation.Logging;
 import com.example.test_repo.common.entity.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ public class MemberRepository {
 
     private final Map<Long, Member> members = new HashMap<>();
 
+    @Logging
     public Member getById(final long id) throws Exception {
         log.info("waiting...1s");
         sleep(1000); // 1초 대기
