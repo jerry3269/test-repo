@@ -16,7 +16,7 @@
             <level>INFO</level>
         </filter>
         <encoder>
-            <pattern>${CONSOLE2_LOG_PATTERN}</pattern>
+            <pattern>[CONSOLE2] ${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 

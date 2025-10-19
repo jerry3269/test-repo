@@ -9,7 +9,7 @@
             <!--로그 파일명 설정-->
             <fileNamePattern>${LOG_DIR}/rolling.%d{yyyyMMdd}_%i.log</fileNamePattern>
             <!--로그 파일 크기 설정-->
-            <maxFileSize>1KB</maxFileSize>
+            <maxFileSize>10KB</maxFileSize>
             <!--로그 보관 기간 설정-->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
@@ -17,7 +17,7 @@
         <!--encoder의 class는 Default로 patternLayoutEncoder가 설정되어 있음. 이 경우엔 명시적으로 지정-->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>
-                ${CONSOLE2_LOG_PATTERN}
+                [ROLLING] ${LOG_PATTERN}
             </pattern>
 
             <!-- 로그 파일에 출력될 패턴을 헤더로 추가 -->
@@ -25,7 +25,27 @@
         </encoder>
     </appender>
 
+    <appender name="MDC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/mdc.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/mdc.%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>10KB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--application 코드에서 MDC에 저장된 mdc-key 값을 로그에 출력-->
+            <pattern>
+                [MDC] [%X{mdc-key}] ${LOG_PATTERN}
+            </pattern>
+
+            <outputPatternAsHeader>true</outputPatternAsHeader>
+        </encoder>
+    </appender>
+
     <root level="INFO">
         <appender-ref ref="ROLLING_FILE"/>
+        <appender-ref ref="MDC"/>
     </root>
 </included>
