@@ -9,8 +9,8 @@
     <!--    이미 CONSOLE은 console-appender.xml에 정의되어 있으므로 2로 정의-->
     <!--    threshold filter를 이용해 INFO 레벨 이상의 로그만 출력하도록 설정-->
     <!--    level filter를 사용하면 특정 레벨의 로그만 출력 가능-->
-    <!--    layout(구버전), encoder<최신버전> 은 출력될 로그의 형식을 지정함-->
-    <!--    이 경우 logback-variables.properties에 정의된 CONSOLE_LOG_PATTERN 속성을 사용하도록 설정.-->
+    <!--    layout(구버전), encoder(최신버전) 은 출력될 로그의 형식을 지정함-->
+    <!--    이 경우 logback-variables.properties에 정의된 LOG_PATTERN 속성을 사용하도록 설정.-->
     <appender name="CONSOLE2" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>

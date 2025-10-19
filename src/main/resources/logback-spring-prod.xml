@@ -72,9 +72,46 @@
         </encoder>
     </appender>
 
+    <!--
+        항목           |    root                          |    logger
+        ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+        이름           |  고정("root")                    |  임의 지정
+        적용 범위       |  전체 로그                       |  특정 패키지 또는 클래스
+        사용 목적       |  기본 로그 설정                  |  부분적 또는 세부 로그 설정
+        상속 구조       |  최상위 (모든 logger의 부모)     |  상속받음 (root로부터)
+        additivity 속성 |  해당 없음                       |  부모(root)로 로그 전달 여부 설정
+        주 사용 사례    |  공통 레벨/출력 설정              |  특정 모듈별 로그 레벨 제어 또는 분리 출력
+    -->
     <root level="INFO">
-<!--        <appender-ref ref="ROLLING_FILE"/>-->
-<!--        <appender-ref ref="MDC"/>-->
+        <appender-ref ref="ROLLING_FILE"/>
         <appender-ref ref="ERROR"/>
     </root>
+
+    <!--
+        로그 레벨 전파 순서
+        1. 해당 클래스에 맞는 logger 탐색 (설정 파일을 위로 거슬러 올라가며 가장 가까운 logger를 찾음)
+            * 예: com.example.test_repo.logback.TestLogbackController 클래스의 로그 발생 시 해당하는 logger가 없으므로
+            * 위로 거슬러 올라가며 com.example.test_repo.logback 패키지에 해당하는 logger를 찾음
+        2. 찾은 logger의 logging level로 1차 필터링
+        3. 해당 되는 로거가 없다면 root logger의 logging level로 2차 필터링
+        4. 필터링된 로그중 appender의 필터 조건에 맞는 로거만 출력
+    -->
+
+    <!--    logger는 특정 패키지나 클래스에 대해 별도의 로깅 레벨을 설정할 수 있음.-->
+    <!--    logger는 특정 패키지나 클래스에 대한 별도의 로깅 파일을 생성할 수 있음.-->
+    <logger name="com.example.test_repo.logback" level="DEBUG" additivity="false">
+        <appender-ref ref="ERROR"/>
+    </logger>
+
+    <!--    logger의 name은 다음과 같이 설정 가능-->
+    <!--    1. 패키지나 클래스 이름-->
+    <!--    2. 임의의 이름 (예: LOGGER_TEST)-->
+
+    <!--    임의의 이름을 사용하면 특정 패키지나 클래스에 국한되지 않고 다양한 곳에서 재사용 가능-->
+    <!--    재사용 방법은 application 코드에서 LoggerFactory.getLogger("LOGGER_TEST")로 logger 인스턴스를 생성하여 사용-->
+    <!--    그럼 해당 클래스에서 "LOGGER_TEST" 이름의 logger 설정이 적용됨-->
+    <logger name="LOGGER_TEST" level="DEBUG" additivity="false">
+        <appender-ref ref="ERROR"/>
+    </logger>
+
 </included>
