@@ -44,8 +44,37 @@
         </encoder>
     </appender>
 
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/error.log</file>
+
+        <!--LevelFilter를 사용해서 ERROR 레벨의 로그만 출력하도록 설정-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <!--로그 레벨이 정확히 일치하면 로그 출력-->
+            <onMatch>ACCEPT</onMatch>
+            <!--로그레벨이 일치하지 않으면 로그 출력 안함-->
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/error.%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <maxFileSize>100KB</maxFileSize>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--application 코드에서 MDC에 저장된 mdc-key 값을 로그에 출력-->
+            <pattern>
+                [ERROR] ${LOG_PATTERN}
+            </pattern>
+
+            <outputPatternAsHeader>true</outputPatternAsHeader>
+        </encoder>
+    </appender>
+
     <root level="INFO">
-        <appender-ref ref="ROLLING_FILE"/>
-        <appender-ref ref="MDC"/>
+<!--        <appender-ref ref="ROLLING_FILE"/>-->
+<!--        <appender-ref ref="MDC"/>-->
+        <appender-ref ref="ERROR"/>
     </root>
 </included>
