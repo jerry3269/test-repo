@@ -1,6 +1,6 @@
 package com.example.test_repo.sync_async.presentation;
 
-import com.example.test_repo.common.entity.Member;
+import com.example.test_repo.common.entity.MemberEntity;
 import com.example.test_repo.common.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -22,15 +22,15 @@ public class AsyncService {
     public CompletableFuture<String> call(final Long id) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Member member = memberRepository.getById(id);
-                return "hello " + member.getName();
+                MemberEntity memberEntity = memberRepository.getById(id);
+                return "hello " + memberEntity.getName();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
-    public Member create() {
+    public MemberEntity create() {
         return memberRepository.create();
     }
 }

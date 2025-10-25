@@ -1,7 +1,7 @@
 package com.example.test_repo.common.repository;
 
 import com.example.test_repo.aop.annotation.Logging;
-import com.example.test_repo.common.entity.Member;
+import com.example.test_repo.common.entity.MemberEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -16,26 +16,26 @@ import static java.lang.Thread.sleep;
 @Repository
 public class MemberRepository {
 
-    private final Map<Long, Member> members = new HashMap<>();
+    private final Map<Long, MemberEntity> members = new HashMap<>();
 
     @Logging
-    public Member getById(final long id) throws Exception {
+    public MemberEntity getById(final long id) throws Exception {
         log.info("waiting...1s");
         sleep(1000); // 1초 대기
-        Optional<Member> member = Optional.ofNullable(members.get(id));
+        Optional<MemberEntity> member = Optional.ofNullable(members.get(id));
         if(member.isEmpty()){
             throw new RuntimeException("Member not found with id: " + id);
         }
         return member.get();
     }
 
-    public Member create() {
-        Member member = new Member();
-        members.put(member.getId(), member);
-        return member;
+    public MemberEntity create() {
+        MemberEntity memberEntity = new MemberEntity();
+        members.put(memberEntity.getId(), memberEntity);
+        return memberEntity;
     }
 
-    public Map<Long, Member> getMembers() {
+    public Map<Long, MemberEntity> getMembers() {
         return Collections.unmodifiableMap(members);
     }
 }
