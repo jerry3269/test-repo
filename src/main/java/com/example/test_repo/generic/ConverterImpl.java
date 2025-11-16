@@ -7,13 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConverterImpl implements Converter<MemberDomain, MemberEntity> {
 
-    public MemberDomain toDomain() {
-        MemberEntity memberEntity = new MemberEntity();
+    private final MemberEntity memberEntity = new MemberEntity();
+
+    public MemberDomain toMemberDomain() {
         return toDomain(memberEntity);
     }
 
-    public MemberEntity toEntity() {
-        MemberDomain domain = toDomain();
-        return domain.toEntity();
+    public MemberEntity toMemberEntity() {
+        MemberDomain domain = toMemberDomain();
+        return toEntity(domain);
     }
 }

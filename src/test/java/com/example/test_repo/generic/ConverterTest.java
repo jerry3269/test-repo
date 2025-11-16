@@ -14,13 +14,13 @@ class ConverterTest {
 
     @Test
     void toDomainTest() {
-        MemberDomain domain = converter.toDomain();
+        MemberDomain domain = converter.toMemberDomain();
         System.out.println(domain);
     }
 
     @Test
     void toEntityTest() {
-        MemberEntity entity = converter.toEntity();
+        MemberEntity entity = converter.toMemberEntity();
         System.out.println(entity);
     }
 
