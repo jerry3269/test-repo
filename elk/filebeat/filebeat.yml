@@ -1,0 +1,18 @@
+filebeat.inputs:
+  - type: filestream
+    enabled: true
+    paths:
+      - /var/log/spring-app/*.log
+
+    json.keys_under_root: true
+    json.add_error_key: true
+    json.message_key: message
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+setup.kibana:
+  hosts: "kibana:5601"
+
+logging.level: info
+logging.to_files: false
